@@ -6,7 +6,7 @@
 package com.aleatoritest.dao.clases;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -62,19 +62,19 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "esProfesor")
     private boolean esProfesor;
-    @ManyToMany(mappedBy = "usuarioList")
-    private List<Pregunta> preguntaList;
+    @ManyToMany(mappedBy = "usuarioCollection")
+    private Collection<Pregunta> preguntaCollection;
     @JoinTable(name = "profesorhasayudante", joinColumns = {
         @JoinColumn(name = "profesor_id", referencedColumnName = "usuario_id")}, inverseJoinColumns = {
         @JoinColumn(name = "ayudante_id", referencedColumnName = "usuario_id")})
     @ManyToMany
-    private List<Usuario> usuarioList;
-    @ManyToMany(mappedBy = "usuarioList")
-    private List<Usuario> usuarioList1;
+    private Collection<Usuario> usuarioCollection;
+    @ManyToMany(mappedBy = "usuarioCollection")
+    private Collection<Usuario> usuarioCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Prueba> pruebaList;
+    private Collection<Prueba> pruebaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Pregunta> preguntaList1;
+    private Collection<Pregunta> preguntaCollection1;
 
     public Usuario() {
     }
@@ -141,48 +141,48 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Pregunta> getPreguntaList() {
-        return preguntaList;
+    public Collection<Pregunta> getPreguntaCollection() {
+        return preguntaCollection;
     }
 
-    public void setPreguntaList(List<Pregunta> preguntaList) {
-        this.preguntaList = preguntaList;
-    }
-
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
-
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setPreguntaCollection(Collection<Pregunta> preguntaCollection) {
+        this.preguntaCollection = preguntaCollection;
     }
 
     @XmlTransient
-    public List<Usuario> getUsuarioList1() {
-        return usuarioList1;
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
     }
 
-    public void setUsuarioList1(List<Usuario> usuarioList1) {
-        this.usuarioList1 = usuarioList1;
-    }
-
-    @XmlTransient
-    public List<Prueba> getPruebaList() {
-        return pruebaList;
-    }
-
-    public void setPruebaList(List<Prueba> pruebaList) {
-        this.pruebaList = pruebaList;
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
     }
 
     @XmlTransient
-    public List<Pregunta> getPreguntaList1() {
-        return preguntaList1;
+    public Collection<Usuario> getUsuarioCollection1() {
+        return usuarioCollection1;
     }
 
-    public void setPreguntaList1(List<Pregunta> preguntaList1) {
-        this.preguntaList1 = preguntaList1;
+    public void setUsuarioCollection1(Collection<Usuario> usuarioCollection1) {
+        this.usuarioCollection1 = usuarioCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Prueba> getPruebaCollection() {
+        return pruebaCollection;
+    }
+
+    public void setPruebaCollection(Collection<Prueba> pruebaCollection) {
+        this.pruebaCollection = pruebaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Pregunta> getPreguntaCollection1() {
+        return preguntaCollection1;
+    }
+
+    public void setPreguntaCollection1(Collection<Pregunta> preguntaCollection1) {
+        this.preguntaCollection1 = preguntaCollection1;
     }
 
     @Override
@@ -207,7 +207,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.Usuario[ usuarioId=" + usuarioId + " ]";
+        return "com.aleatoritest.dao.clases.Usuario[ usuarioId=" + usuarioId + " ]";
     }
     
 }

@@ -6,7 +6,7 @@
 package com.aleatoritest.dao.clases;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,13 +42,13 @@ public class Materia implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @ManyToMany(mappedBy = "materiaList")
-    private List<Pregunta> preguntaList;
+    @ManyToMany(mappedBy = "materiaCollection")
+    private Collection<Pregunta> preguntaCollection;
     @JoinColumn(name = "asignatura_id", referencedColumnName = "asignatura_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Asignatura asignatura;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia")
-    private List<Prueba> pruebaList;
+    private Collection<Prueba> pruebaCollection;
 
     public Materia() {
     }
@@ -83,12 +83,12 @@ public class Materia implements Serializable {
     }
 
     @XmlTransient
-    public List<Pregunta> getPreguntaList() {
-        return preguntaList;
+    public Collection<Pregunta> getPreguntaCollection() {
+        return preguntaCollection;
     }
 
-    public void setPreguntaList(List<Pregunta> preguntaList) {
-        this.preguntaList = preguntaList;
+    public void setPreguntaCollection(Collection<Pregunta> preguntaCollection) {
+        this.preguntaCollection = preguntaCollection;
     }
 
     public Asignatura getAsignatura() {
@@ -100,12 +100,12 @@ public class Materia implements Serializable {
     }
 
     @XmlTransient
-    public List<Prueba> getPruebaList() {
-        return pruebaList;
+    public Collection<Prueba> getPruebaCollection() {
+        return pruebaCollection;
     }
 
-    public void setPruebaList(List<Prueba> pruebaList) {
-        this.pruebaList = pruebaList;
+    public void setPruebaCollection(Collection<Prueba> pruebaCollection) {
+        this.pruebaCollection = pruebaCollection;
     }
 
     @Override
@@ -130,7 +130,7 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.Materia[ materiaPK=" + materiaPK + " ]";
+        return "com.aleatoritest.dao.clases.Materia[ materiaPK=" + materiaPK + " ]";
     }
     
 }

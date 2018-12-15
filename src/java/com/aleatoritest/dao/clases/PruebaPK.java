@@ -90,7 +90,7 @@ public class PruebaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.PruebaPK[ pruebaId=" + pruebaId + ", usuarioId=" + usuarioId + ", materiaId=" + materiaId + " ]";
+        return "com.aleatoritest.dao.clases.PruebaPK[ pruebaId=" + pruebaId + ", usuarioId=" + usuarioId + ", materiaId=" + materiaId + " ]";
     }
     
 }

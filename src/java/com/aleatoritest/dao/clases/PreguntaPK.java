@@ -74,7 +74,7 @@ public class PreguntaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.PreguntaPK[ preguntaId=" + preguntaId + ", usuarioId=" + usuarioId + " ]";
+        return "com.aleatoritest.dao.clases.PreguntaPK[ preguntaId=" + preguntaId + ", usuarioId=" + usuarioId + " ]";
     }
     
 }

@@ -74,7 +74,7 @@ public class MateriaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.MateriaPK[ materiaId=" + materiaId + ", asignaturaId=" + asignaturaId + " ]";
+        return "com.aleatoritest.dao.clases.MateriaPK[ materiaId=" + materiaId + ", asignaturaId=" + asignaturaId + " ]";
     }
     
 }

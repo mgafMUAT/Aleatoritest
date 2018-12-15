@@ -6,7 +6,7 @@
 package com.aleatoritest.dao.clases;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,7 +44,7 @@ public class Asignatura implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
-    private List<Materia> materiaList;
+    private Collection<Materia> materiaCollection;
 
     public Asignatura() {
     }
@@ -75,12 +75,12 @@ public class Asignatura implements Serializable {
     }
 
     @XmlTransient
-    public List<Materia> getMateriaList() {
-        return materiaList;
+    public Collection<Materia> getMateriaCollection() {
+        return materiaCollection;
     }
 
-    public void setMateriaList(List<Materia> materiaList) {
-        this.materiaList = materiaList;
+    public void setMateriaCollection(Collection<Materia> materiaCollection) {
+        this.materiaCollection = materiaCollection;
     }
 
     @Override
@@ -105,7 +105,7 @@ public class Asignatura implements Serializable {
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.Asignatura[ asignaturaId=" + asignaturaId + " ]";
+        return "com.aleatoritest.dao.clases.Asignatura[ asignaturaId=" + asignaturaId + " ]";
     }
     
 }
