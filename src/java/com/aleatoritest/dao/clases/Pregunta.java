@@ -6,8 +6,8 @@
 package com.aleatoritest.dao.clases;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -73,14 +73,14 @@ public class Pregunta implements Serializable {
         @JoinColumn(name = "pregunta_id", referencedColumnName = "pregunta_id")}, inverseJoinColumns = {
         @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id")})
     @ManyToMany
-    private List<Usuario> usuarioList;
+    private Collection<Usuario> usuarioCollection;
     @JoinTable(name = "preguntahasmateria", joinColumns = {
         @JoinColumn(name = "pregunta_id", referencedColumnName = "pregunta_id")}, inverseJoinColumns = {
         @JoinColumn(name = "materia_id", referencedColumnName = "materia_id")})
     @ManyToMany
-    private List<Materia> materiaList;
-    @ManyToMany(mappedBy = "preguntaList")
-    private List<Prueba> pruebaList;
+    private Collection<Materia> materiaCollection;
+    @ManyToMany(mappedBy = "preguntaCollection")
+    private Collection<Prueba> pruebaCollection;
     @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
@@ -172,30 +172,30 @@ public class Pregunta implements Serializable {
     }
 
     @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
-    }
-
-    @XmlTransient
-    public List<Materia> getMateriaList() {
-        return materiaList;
-    }
-
-    public void setMateriaList(List<Materia> materiaList) {
-        this.materiaList = materiaList;
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
     }
 
     @XmlTransient
-    public List<Prueba> getPruebaList() {
-        return pruebaList;
+    public Collection<Materia> getMateriaCollection() {
+        return materiaCollection;
     }
 
-    public void setPruebaList(List<Prueba> pruebaList) {
-        this.pruebaList = pruebaList;
+    public void setMateriaCollection(Collection<Materia> materiaCollection) {
+        this.materiaCollection = materiaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Prueba> getPruebaCollection() {
+        return pruebaCollection;
+    }
+
+    public void setPruebaCollection(Collection<Prueba> pruebaCollection) {
+        this.pruebaCollection = pruebaCollection;
     }
 
     public Usuario getUsuario() {
@@ -228,7 +228,7 @@ public class Pregunta implements Serializable {
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.Pregunta[ preguntaPK=" + preguntaPK + " ]";
+        return "com.aleatoritest.dao.clases.Pregunta[ preguntaPK=" + preguntaPK + " ]";
     }
     
 }
