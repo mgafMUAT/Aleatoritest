@@ -4,14 +4,14 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.aleatoritest.dao.clases.Asignatura</class>
     <class>com.aleatoritest.dao.clases.Usuario</class>
-    <class>com.aleatoritest.dao.clases.Materia</class>
     <class>com.aleatoritest.dao.clases.Pregunta</class>
     <class>com.aleatoritest.dao.clases.Prueba</class>
+    <class>com.aleatoritest.dao.clases.Materia</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/aleatoritest?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="aleatoriuser"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="aleatoritest"/>
     </properties>
   </persistence-unit>
