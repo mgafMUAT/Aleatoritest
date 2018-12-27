@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aleatoritest.dao.clases;
+package com.aleatoritest.dao;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,7 +44,7 @@ public class Asignatura implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
-    private Collection<Materia> materiaCollection;
+    private List<Materia> materiaList;
 
     public Asignatura() {
     }
@@ -75,12 +75,12 @@ public class Asignatura implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Materia> getMateriaCollection() {
-        return materiaCollection;
+    public List<Materia> getMateriaList() {
+        return materiaList;
     }
 
-    public void setMateriaCollection(Collection<Materia> materiaCollection) {
-        this.materiaCollection = materiaCollection;
+    public void setMateriaList(List<Materia> materiaList) {
+        this.materiaList = materiaList;
     }
 
     @Override
@@ -105,7 +105,7 @@ public class Asignatura implements Serializable {
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.clases.Asignatura[ asignaturaId=" + asignaturaId + " ]";
+        return "com.aleatoritest.dao.Asignatura[ asignaturaId=" + asignaturaId + " ]";
     }
     
 }

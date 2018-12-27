@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aleatoritest.dao.clases;
+package com.aleatoritest.dao;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,13 +42,13 @@ public class Materia implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @ManyToMany(mappedBy = "materiaCollection")
-    private Collection<Pregunta> preguntaCollection;
+    @ManyToMany(mappedBy = "materiaList")
+    private List<Pregunta> preguntaList;
     @JoinColumn(name = "asignatura_id", referencedColumnName = "asignatura_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Asignatura asignatura;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia")
-    private Collection<Prueba> pruebaCollection;
+    private List<Prueba> pruebaList;
 
     public Materia() {
     }
@@ -83,12 +83,12 @@ public class Materia implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Pregunta> getPreguntaCollection() {
-        return preguntaCollection;
+    public List<Pregunta> getPreguntaList() {
+        return preguntaList;
     }
 
-    public void setPreguntaCollection(Collection<Pregunta> preguntaCollection) {
-        this.preguntaCollection = preguntaCollection;
+    public void setPreguntaList(List<Pregunta> preguntaList) {
+        this.preguntaList = preguntaList;
     }
 
     public Asignatura getAsignatura() {
@@ -100,12 +100,12 @@ public class Materia implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Prueba> getPruebaCollection() {
-        return pruebaCollection;
+    public List<Prueba> getPruebaList() {
+        return pruebaList;
     }
 
-    public void setPruebaCollection(Collection<Prueba> pruebaCollection) {
-        this.pruebaCollection = pruebaCollection;
+    public void setPruebaList(List<Prueba> pruebaList) {
+        this.pruebaList = pruebaList;
     }
 
     @Override
@@ -130,7 +130,7 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.clases.Materia[ materiaPK=" + materiaPK + " ]";
+        return "com.aleatoritest.dao.Materia[ materiaPK=" + materiaPK + " ]";
     }
     
 }
