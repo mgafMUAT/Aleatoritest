@@ -14,8 +14,8 @@ import java.sql.*;
 public class Validator {
 
     private static final String CONNECT = "jdbc:mysql://localhost:3306/aleatoritest";
-    private static final String USER = "root";
-    private static final String PASS = "qwertyuiop";
+    private static final String USER = "aleatoriuser";
+    private static final String PASS = "aleatoritest";
     private static Connection con;
     private static Validator instance = null;
 
