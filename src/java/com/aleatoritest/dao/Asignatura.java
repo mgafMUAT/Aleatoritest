@@ -6,7 +6,7 @@
 package com.aleatoritest.dao;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,26 +25,15 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author MauricioGabriel
  */
-@Entity
-@Table(name = "asignatura")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Asignatura.findAll", query = "SELECT a FROM Asignatura a")
-    , @NamedQuery(name = "Asignatura.findByAsignaturaId", query = "SELECT a FROM Asignatura a WHERE a.asignaturaId = :asignaturaId")
-    , @NamedQuery(name = "Asignatura.findByNombre", query = "SELECT a FROM Asignatura a WHERE a.nombre = :nombre")})
+//@NamedQueries({
+//    @NamedQuery(name = "Asignatura.findAll", query = "SELECT a FROM Asignatura a")
+//    , @NamedQuery(name = "Asignatura.findByAsignaturaId", query = "SELECT a FROM Asignatura a WHERE a.asignaturaId = :asignaturaId")
+//    , @NamedQuery(name = "Asignatura.findByNombre", query = "SELECT a FROM Asignatura a WHERE a.nombre = :nombre")})
 public class Asignatura implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "asignatura_id")
     private Integer asignaturaId;
-    @Basic(optional = false)
-    @Column(name = "nombre")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignatura")
-    private List<Materia> materiaList;
+    private ArrayList<Materia> materiaList;
 
     public Asignatura() {
     }
@@ -75,11 +64,11 @@ public class Asignatura implements Serializable {
     }
 
     @XmlTransient
-    public List<Materia> getMateriaList() {
+    public ArrayList<Materia> getMateriaList() {
         return materiaList;
     }
 
-    public void setMateriaList(List<Materia> materiaList) {
+    public void setMateriaList(ArrayList<Materia> materiaList) {
         this.materiaList = materiaList;
     }
 
@@ -97,15 +86,12 @@ public class Asignatura implements Serializable {
             return false;
         }
         Asignatura other = (Asignatura) object;
-        if ((this.asignaturaId == null && other.asignaturaId != null) || (this.asignaturaId != null && !this.asignaturaId.equals(other.asignaturaId))) {
-            return false;
-        }
-        return true;
+        return !((this.asignaturaId == null && other.asignaturaId != null) || (this.asignaturaId != null && !this.asignaturaId.equals(other.asignaturaId)));
     }
 
     @Override
     public String toString() {
         return "com.aleatoritest.dao.Asignatura[ asignaturaId=" + asignaturaId + " ]";
     }
-    
+
 }

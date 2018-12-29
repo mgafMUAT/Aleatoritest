@@ -5,6 +5,7 @@
  */
 package com.aleatoritest.dto.driver;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,20 +20,23 @@ import java.util.ArrayList;
 public abstract class DaoDriver<T> {
 
     protected static Connection conn;
-    protected String tableName;
     protected int attNum;//Sin contar el id
+    protected Class table;
 
     public DaoDriver() {
         conn = DaoFactory.getConnection();
     }
     
     protected String listSQL() {
-        String sql = "SELECT * FROM " + tableName;
-        return sql;
+        return "SELECT * FROM " + table.getSimpleName().toLowerCase();
+    }
+    
+    private String byId() {
+        return " WHERE " + table.getSimpleName().toLowerCase() + "_id = ?";
     }
     
     protected String selectById() {
-        String sql = listSQL() + " WHERE " + tableName + "_id = ?";
+        String sql = listSQL() + byId();
         return sql;
     }
     
@@ -42,12 +46,24 @@ public abstract class DaoDriver<T> {
             values += ", ?";
         }
         values += ")";
-        String sql = "insert into " + tableName + values;
+        String sql = "insert into " + table.getSimpleName().toLowerCase() + values;
+        return sql;
+    }
+    
+    protected String editSQL() {
+        String update = "update " + table.getSimpleName().toLowerCase();
+        String set = " set ";
+        Field[] fields = table.getDeclaredFields();
+        for (int i = 1; i < attNum; i++) {
+            set += fields[i].getName() + " = ?, ";
+        }
+        set += fields[attNum].getName() + " = ?";
+        String sql = update + set + byId();
         return sql;
     }
     
     protected String deleteSQL() {
-        String sql = "delete from " + tableName + " where " + tableName + "_id=?";
+        String sql = "delete from " + table.getSimpleName().toLowerCase() + byId();
         return sql;
     }
 
@@ -65,28 +81,68 @@ public abstract class DaoDriver<T> {
         }
         return res;
     }
-    
-    public abstract T buscar(String cond);
 
-//    public TecProducto buscar(String proN, String proDescripcion, int proPrecio,
-//            String proUltimaActualizacion);
+    public ArrayList<T> listar() {
+        ArrayList<T> list = new ArrayList<>(1);
+        try {
+            PreparedStatement pstm = conn.prepareStatement(listSQL());
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                list.add(map(rs));
+            }
+        } catch (SQLException ex) {
+            printErr(ex);
+        }
+        return list;
+    }
 
-    public abstract ArrayList<T> listar();
+    public boolean guardar(T nuevo) {
+        try {
+            PreparedStatement pstm = conn.prepareStatement(insertSQL());
+            pstm = unMap(pstm, nuevo, false);
+            int update = pstm.executeUpdate();
+            return update != 0;
 
-    public abstract boolean guardar(T nuevo);
+        } catch (SQLException ex) {
+            printErr(ex);
+            return false;
+        }
+    }
 
-    public abstract boolean editar(T mod);
+    public boolean editar(T mod) {
+        try {
+            PreparedStatement pstm = conn.prepareStatement(editSQL());
+            pstm = unMap(pstm, mod, true);
+            int update = pstm.executeUpdate();
+            return update != 0;
 
-    public abstract boolean borrar(int id);
+        } catch (SQLException ex) {
+            printErr(ex);
+            return false;
+        }
+    }
+
+    public boolean borrar(int id) {
+        try {
+            PreparedStatement pstm = conn.prepareStatement(deleteSQL());
+            pstm.setInt(1, id);
+            int update = pstm.executeUpdate();
+            return update != 0;
+
+        } catch (SQLException ex) {
+            printErr(ex);
+            return false;
+        }
+    }
     
     protected abstract T map(ResultSet rs) throws SQLException;
     
-    protected abstract PreparedStatement unMap(PreparedStatement pstm, T tabla) throws SQLException;
+    protected abstract PreparedStatement unMap(PreparedStatement pstm, T tabla, boolean id) throws SQLException;
     
     protected void printErr(Exception ex) {
         System.out.println(ex);
             for (StackTraceElement stackEl : ex.getStackTrace()) {
-                System.out.println(stackEl);
+                System.out.println("        " + stackEl);
             }
     }
 }

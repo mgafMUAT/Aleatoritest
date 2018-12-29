@@ -5,8 +5,8 @@
  */
 package com.aleatoritest;
 
-import com.aleatoritest.dao.Usuario;
-import com.aleatoritest.dto.UsuarioDriver;
+import com.aleatoritest.dao.Asignatura;
+import com.aleatoritest.dto.AsignaturaDriver;
 
 /**
  *
@@ -14,13 +14,13 @@ import com.aleatoritest.dto.UsuarioDriver;
  */
 public class TestRun {
     public static void main(String[] args) {
-        UsuarioDriver ud = new UsuarioDriver();
-        Usuario user = ud.buscarId(8);
-        System.out.println(user.getUsuarioId());
-        System.out.println(user.getCorreo());
-        System.out.println(user.getClave());
-        System.out.println(user.getNombre());
-        System.out.println(user.getApellidos());
-        System.out.println(user.getEsProfesor());
+        AsignaturaDriver ad = new AsignaturaDriver();
+        Asignatura get = ad.listar().get(0);
+        System.out.println(get.getAsignaturaId());
+        System.out.println(get.getNombre());
+        get.setNombre("Ciencias");
+        System.out.println(ad.editar(get));
+        get = ad.listar().get(0);
+        System.out.println(get.getNombre());
     }
 }

@@ -10,9 +10,6 @@ import com.aleatoritest.dto.driver.DaoDriver;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,39 +19,8 @@ public class UsuarioDriver extends DaoDriver<Usuario> {
 
     public UsuarioDriver() {
         super();
-        super.tableName = "usuario";
+        super.table = Usuario.class;
         super.attNum = 5;
-    }
-
-    @Override
-    public Usuario buscar(String cond) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ArrayList<Usuario> listar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean guardar(Usuario nuevo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean editar(Usuario mod) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean borrar(int id) {
-        try {
-            PreparedStatement pstm = conn.prepareStatement(super.deleteSQL());
-            pstm.setInt(1, id);
-        } catch (SQLException ex) {
-            super.printErr(ex);
-        }
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -69,8 +35,16 @@ public class UsuarioDriver extends DaoDriver<Usuario> {
     }
 
     @Override
-    protected PreparedStatement unMap(PreparedStatement pstm, Usuario tabla) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected PreparedStatement unMap(PreparedStatement pstm, Usuario tabla, boolean id) throws SQLException {
+        pstm.setString(1, tabla.getCorreo());
+        pstm.setString(2, tabla.getClave());
+        pstm.setString(3, tabla.getNombre());
+        pstm.setString(4, tabla.getApellidos());
+        pstm.setBoolean(5, tabla.getEsProfesor());
+        if (id) {
+            pstm.setInt(6, tabla.getUsuarioId());
+        }
+        return pstm;
     }
 
 }
