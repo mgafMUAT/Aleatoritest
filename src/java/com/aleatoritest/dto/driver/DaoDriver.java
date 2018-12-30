@@ -24,22 +24,26 @@ public abstract class DaoDriver<T> {
     protected Class table;
 
     public DaoDriver() {
-        conn = DaoFactory.getConnection();
+        try {
+            conn = DaoFactory.getConnection();
+        } catch (SQLException ex) {
+            printErr(ex);
+        }
     }
-    
+
     protected String listSQL() {
         return "SELECT * FROM " + table.getSimpleName().toLowerCase();
     }
-    
+
     private String byId() {
         return " WHERE " + table.getSimpleName().toLowerCase() + "_id = ?";
     }
-    
+
     protected String selectById() {
         String sql = listSQL() + byId();
         return sql;
     }
-    
+
     protected String insertSQL() {
         String values = " values(null";
         for (int i = 0; i < attNum; i++) {
@@ -49,7 +53,7 @@ public abstract class DaoDriver<T> {
         String sql = "insert into " + table.getSimpleName().toLowerCase() + values;
         return sql;
     }
-    
+
     protected String editSQL() {
         String update = "update " + table.getSimpleName().toLowerCase();
         String set = " set ";
@@ -61,7 +65,7 @@ public abstract class DaoDriver<T> {
         String sql = update + set + byId();
         return sql;
     }
-    
+
     protected String deleteSQL() {
         String sql = "delete from " + table.getSimpleName().toLowerCase() + byId();
         return sql;
@@ -134,15 +138,15 @@ public abstract class DaoDriver<T> {
             return false;
         }
     }
-    
+
     protected abstract T map(ResultSet rs) throws SQLException;
-    
+
     protected abstract PreparedStatement unMap(PreparedStatement pstm, T tabla, boolean id) throws SQLException;
-    
+
     protected void printErr(Exception ex) {
         System.out.println(ex);
-            for (StackTraceElement stackEl : ex.getStackTrace()) {
-                System.out.println("        " + stackEl);
-            }
+        for (StackTraceElement stackEl : ex.getStackTrace()) {
+            System.out.println("        " + stackEl);
+        }
     }
 }

@@ -15,17 +15,17 @@ public class DaoFactory {
     private static final String PASS = "aleatoritest";
     private static Connection conn = null;
 
-    public static Connection getConnection() {
-        if (conn == null) {
+    public static Connection getConnection() throws SQLException {
+        if (conn == null || conn.isClosed()) {
             createConnection();
         }
         return conn;
     }
-    
+
     private static void createConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(CONNECT,USER, PASS);
+            conn = DriverManager.getConnection(CONNECT, USER, PASS);
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex);
             for (StackTraceElement stackEl : ex.getStackTrace()) {

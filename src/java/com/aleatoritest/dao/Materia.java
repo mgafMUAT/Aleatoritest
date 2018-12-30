@@ -7,71 +7,42 @@ package com.aleatoritest.dao;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author MauricioGabriel
  */
-@Entity
-@Table(name = "materia")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")
-    , @NamedQuery(name = "Materia.findByMateriaId", query = "SELECT m FROM Materia m WHERE m.materiaPK.materiaId = :materiaId")
-    , @NamedQuery(name = "Materia.findByAsignaturaId", query = "SELECT m FROM Materia m WHERE m.materiaPK.asignaturaId = :asignaturaId")
-    , @NamedQuery(name = "Materia.findByNombre", query = "SELECT m FROM Materia m WHERE m.nombre = :nombre")})
+//@NamedQueries({
+//    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")
+//    , @NamedQuery(name = "Materia.findByMateriaId", query = "SELECT m FROM Materia m WHERE m.materia_id.materiaId = :materiaId")
+//    , @NamedQuery(name = "Materia.findByAsignaturaId", query = "SELECT m FROM Materia m WHERE m.materia_id.asignaturaId = :asignaturaId")
+//    , @NamedQuery(name = "Materia.findByNombre", query = "SELECT m FROM Materia m WHERE m.nombre = :nombre")})
 public class Materia implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected MateriaPK materiaPK;
-    @Basic(optional = false)
-    @Column(name = "nombre")
+    private Integer materia_id;
     private String nombre;
-    @ManyToMany(mappedBy = "materiaList")
     private List<Pregunta> preguntaList;
-    @JoinColumn(name = "asignatura_id", referencedColumnName = "asignatura_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
     private Asignatura asignatura;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia")
     private List<Prueba> pruebaList;
 
     public Materia() {
     }
 
-    public Materia(MateriaPK materiaPK) {
-        this.materiaPK = materiaPK;
+    public Materia(Integer materia_id) {
+        this.materia_id = materia_id;
     }
 
-    public Materia(MateriaPK materiaPK, String nombre) {
-        this.materiaPK = materiaPK;
+    public Materia(Integer materia_id, String nombre) {
+        this.materia_id = materia_id;
         this.nombre = nombre;
     }
 
-    public Materia(int materiaId, int asignaturaId) {
-        this.materiaPK = new MateriaPK(materiaId, asignaturaId);
+    public Integer getMateria_id() {
+        return materia_id;
     }
 
-    public MateriaPK getMateriaPK() {
-        return materiaPK;
-    }
-
-    public void setMateriaPK(MateriaPK materiaPK) {
-        this.materiaPK = materiaPK;
+    public void setMateria_id(Integer materia_id) {
+        this.materia_id = materia_id;
     }
 
     public String getNombre() {
@@ -82,7 +53,6 @@ public class Materia implements Serializable {
         this.nombre = nombre;
     }
 
-    @XmlTransient
     public List<Pregunta> getPreguntaList() {
         return preguntaList;
     }
@@ -99,7 +69,6 @@ public class Materia implements Serializable {
         this.asignatura = asignatura;
     }
 
-    @XmlTransient
     public List<Prueba> getPruebaList() {
         return pruebaList;
     }
@@ -110,8 +79,8 @@ public class Materia implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (materiaPK != null ? materiaPK.hashCode() : 0);
+        Integer hash = 0;
+        hash += (materia_id != null ? materia_id.hashCode() : 0);
         return hash;
     }
 
@@ -122,15 +91,12 @@ public class Materia implements Serializable {
             return false;
         }
         Materia other = (Materia) object;
-        if ((this.materiaPK == null && other.materiaPK != null) || (this.materiaPK != null && !this.materiaPK.equals(other.materiaPK))) {
-            return false;
-        }
-        return true;
+        return !((this.materia_id == null && other.materia_id != null) || (this.materia_id != null && !this.materia_id.equals(other.materia_id)));
     }
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.Materia[ materiaPK=" + materiaPK + " ]";
+        return "com.aleatoritest.dao.Materia[ materia_id=" + materia_id + " ]";
     }
     
 }

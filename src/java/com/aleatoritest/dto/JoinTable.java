@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.aleatoritest;
+package com.aleatoritest.dto;
 
 /**
  *
  * @author MauricioGabriel
  */
-public class TestRun {
-    public static void main(String[] args) {
-        
-    }
+public enum JoinTable {
+    PROFESORHASESTUDIANTE,
+    PREGUNTACOMPARTIDA,
+    PREGUNTAHASMATERIA,
+    PRUEBAHASPREGUNTA
 }

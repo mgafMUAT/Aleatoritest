@@ -22,6 +22,20 @@ public class UsuarioDriver extends DaoDriver<Usuario> {
         super.table = Usuario.class;
         super.attNum = 5;
     }
+    
+    public boolean validar(String correo, String clave) {
+        String sql = listSQL() + " where correo = ? and clave = ?";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setString(1, correo);
+            pstm.setString(2, clave);
+            ResultSet rs = pstm.executeQuery();
+            return rs.next();
+        } catch (SQLException ex) {
+            printErr(ex);
+            return false;
+        }
+    }
 
     @Override
     protected Usuario map(ResultSet rs) throws SQLException {
