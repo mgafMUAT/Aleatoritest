@@ -38,7 +38,7 @@ public class PreguntaDriver extends DaoDriver<Pregunta> {
         Pregunta nuevo = new Pregunta(pregunta_id, pregunta, respuestaCorrecta, alternativa1, alternativa2, alternativa3, esVisible, fecha);
         nuevo.setUsuario(usuario);
         nuevo.setUsuarioIds(new JoinTableDriver(JoinTable.PREGUNTACOMPARTIDA).listar(true, pregunta_id));
-        nuevo.setMateriaIds(new MateriaDriver().listarIds("pregunta_id", pregunta_id));
+        nuevo.setMateriaIds(new JoinTableDriver(JoinTable.PREGUNTAHASMATERIA).listar(true, pregunta_id));
         nuevo.setPruebaIds(new JoinTableDriver(JoinTable.PRUEBAHASPREGUNTA).listar(false, pregunta_id));
         return nuevo;
     }
