@@ -32,7 +32,8 @@ public class MateriaDriver extends DaoDriver<Materia> {
         Asignatura asignatura = new AsignaturaDriver().buscarId(rs.getInt(2));
         String nombre = rs.getString(3);
         Materia nuevo = new Materia(id, nombre, asignatura);
-        
+        nuevo.setPreguntaIds(new JoinTableDriver(JoinTable.PREGUNTAHASMATERIA).listar(false, id));
+        nuevo.setPruebaIds(new PruebaDriver().listarIds("materia_id", id));
         return nuevo;
     }
 
