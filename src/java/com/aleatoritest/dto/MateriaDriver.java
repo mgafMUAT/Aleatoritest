@@ -31,7 +31,9 @@ public class MateriaDriver extends DaoDriver<Materia> {
         int id = rs.getInt(1);
         Asignatura asignatura = new AsignaturaDriver().buscarId(rs.getInt(2));
         String nombre = rs.getString(3);
-        return new Materia(id, nombre, asignatura);
+        Materia nuevo = new Materia(id, nombre, asignatura);
+        
+        return nuevo;
     }
 
     @Override

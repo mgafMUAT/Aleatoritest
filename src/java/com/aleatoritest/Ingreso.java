@@ -5,6 +5,7 @@
  */
 package com.aleatoritest;
 
+import com.aleatoritest.dto.UsuarioDriver;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -34,12 +35,12 @@ public class Ingreso extends HttpServlet {
         String email = request.getParameter("email");
         String pass = request.getParameter("pass");
         
-        Validator valid = Validator.getInstance();
+        UsuarioDriver ud = new UsuarioDriver();
 
-        if (valid.checkUser(email, pass)) {
+        if (ud.validar(email, pass)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", email);
-            session.setMaxInactiveInterval(120);
+            session.setMaxInactiveInterval(240);
             response.sendRedirect("home");
         } else {
             PrintWriter out = response.getWriter();

@@ -34,6 +34,11 @@ public abstract class DaoDriver<T> {
     protected String listSQL() {
         return "SELECT * FROM " + table.getSimpleName().toLowerCase();
     }
+    
+    protected String listId() {
+        String tName = table.getSimpleName().toLowerCase();
+        return "select " + tName + "_id from " + tName;
+    }
 
     private String byId() {
         return " WHERE " + table.getSimpleName().toLowerCase() + "_id = ?";
@@ -93,6 +98,22 @@ public abstract class DaoDriver<T> {
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 list.add(map(rs));
+            }
+        } catch (SQLException ex) {
+            printErr(ex);
+        }
+        return list;
+    }
+    
+    public ArrayList<Integer> listarIds(String fcol, int f_id) {
+        ArrayList<Integer> list = new ArrayList<>(1);
+        String sql = listId() + " where " + fcol + " = ?";
+        try {
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, f_id);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt(1));
             }
         } catch (SQLException ex) {
             printErr(ex);

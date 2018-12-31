@@ -29,7 +29,9 @@ public class AsignaturaDriver extends DaoDriver<Asignatura> {
     protected Asignatura map(ResultSet rs) throws SQLException {
         int asignatura_id = rs.getInt(1);
         String nombre = rs.getString(2);
-        return new Asignatura(asignatura_id, nombre);
+        Asignatura nuevo = new Asignatura(asignatura_id, nombre);
+        nuevo.setMateriaIds(new MateriaDriver().listarIds("asignatura_id", asignatura_id));
+        return nuevo;
     }
 
     @Override

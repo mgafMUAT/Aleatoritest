@@ -5,9 +5,10 @@
  */
 package com.aleatoritest.dao;
 
+import com.aleatoritest.dto.PreguntaDriver;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,7 +30,8 @@ public class Prueba implements Serializable {
     private String nombre;
     private int cantidadPreguntas;
     private Date fecha;
-    private List<Pregunta> preguntaList;
+    private ArrayList<Pregunta> preguntaList;
+    private ArrayList<Integer> preguntaIds;
 
     public Prueba() {
     }
@@ -77,12 +79,27 @@ public class Prueba implements Serializable {
         this.fecha = fecha;
     }
 
-    public List<Pregunta> getPreguntaList() {
+    public ArrayList<Pregunta> getPreguntaList() {
         return preguntaList;
     }
 
-    public void setPreguntaList(List<Pregunta> preguntaList) {
+    public void setPreguntaList(ArrayList<Pregunta> preguntaList) {
         this.preguntaList = preguntaList;
+    }
+    public void makePreguntaList() {
+        preguntaList = new ArrayList<>(2);
+        PreguntaDriver pd = new PreguntaDriver();
+        preguntaIds.forEach((preguntaId) -> {
+            preguntaList.add(pd.buscarId(preguntaId));
+        });
+    }
+
+    public ArrayList<Integer> getPreguntaIds() {
+        return preguntaIds;
+    }
+
+    public void setPreguntaIds(ArrayList<Integer> preguntaIds) {
+        this.preguntaIds = preguntaIds;
     }
 
     public Usuario getUsuario() {

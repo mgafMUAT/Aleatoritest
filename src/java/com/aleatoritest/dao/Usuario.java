@@ -5,6 +5,7 @@
  */
 package com.aleatoritest.dao;
 
+import com.aleatoritest.dto.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -145,6 +146,30 @@ public class Usuario implements Serializable {
 
     public void setPruebaIds(ArrayList<Integer> pruebaIds) {
         this.pruebaIds = pruebaIds;
+    }
+    
+    public void makePreguntaList() {
+        preguntaList = new ArrayList<>(2);
+        PreguntaDriver pd = new PreguntaDriver();
+        preguntaIds.forEach((preguntaId) -> {
+            preguntaList.add(pd.buscarId(preguntaId));
+        });
+    }
+    
+    public void makeUsuarioList() {
+        usuarioList = new ArrayList<>(2);
+        UsuarioDriver pd = new UsuarioDriver();
+        usuarioIds.forEach((usuario) -> {
+            usuarioList.add(pd.buscarId(usuario));
+        });
+    }
+    
+    public void makePruebaList() {
+        pruebaList = new ArrayList<>(2);
+        PruebaDriver pd = new PruebaDriver();
+        pruebaIds.forEach((pruebaId) -> {
+            pruebaList.add(pd.buscarId(pruebaId));
+        });
     }
 
     @Override

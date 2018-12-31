@@ -5,6 +5,7 @@
  */
 package com.aleatoritest.dao;
 
+import com.aleatoritest.dto.MateriaDriver;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class Asignatura implements Serializable {
 
     private Integer asignaturaId;
     private String nombre;
+    private ArrayList<Integer> materiaIds;
     private ArrayList<Materia> materiaList;
 
     public Asignatura() {
@@ -50,12 +52,28 @@ public class Asignatura implements Serializable {
         this.nombre = nombre;
     }
 
+    public ArrayList<Integer> getMateriaIds() {
+        return materiaIds;
+    }
+
+    public void setMateriaIds(ArrayList<Integer> materiaIds) {
+        this.materiaIds = materiaIds;
+    }
+
     public ArrayList<Materia> getMateriaList() {
         return materiaList;
     }
 
     public void setMateriaList(ArrayList<Materia> materiaList) {
         this.materiaList = materiaList;
+    }
+    
+    public void makeMateriaList() {
+        materiaList = new ArrayList<>(2);
+        MateriaDriver pd = new MateriaDriver();
+        materiaIds.forEach((materia) -> {
+            materiaList.add(pd.buscarId(materia));
+        });
     }
 
     @Override

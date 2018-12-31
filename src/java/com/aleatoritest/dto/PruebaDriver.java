@@ -36,6 +36,7 @@ public class PruebaDriver extends DaoDriver<Prueba> {
         Prueba nuevo = new Prueba(prueba_id, nombre, cantidadPreguntas, fecha);
         nuevo.setUsuario(usuario);
         nuevo.setMateria(materia);
+        nuevo.setPreguntaIds(new JoinTableDriver(JoinTable.PRUEBAHASPREGUNTA).listar(true, prueba_id));
         return nuevo;
     }
 

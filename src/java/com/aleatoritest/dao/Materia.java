@@ -6,7 +6,7 @@
 package com.aleatoritest.dao;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,8 +22,8 @@ public class Materia implements Serializable {
     private Integer materiaId;
     private Asignatura asignatura;
     private String nombre;
-    private List<Pregunta> preguntaList;
-    private List<Prueba> pruebaList;
+    private ArrayList<Integer> preguntaIds;
+    private ArrayList<Integer> pruebaIds;
 
     public Materia() {
     }
@@ -59,12 +59,12 @@ public class Materia implements Serializable {
         this.nombre = nombre;
     }
 
-    public List<Pregunta> getPreguntaList() {
-        return preguntaList;
+    public ArrayList<Integer> getPreguntaIds() {
+        return preguntaIds;
     }
 
-    public void setPreguntaList(List<Pregunta> preguntaList) {
-        this.preguntaList = preguntaList;
+    public void setPreguntaIds(ArrayList<Integer> preguntaIds) {
+        this.preguntaIds = preguntaIds;
     }
 
     public Asignatura getAsignatura() {
@@ -75,12 +75,12 @@ public class Materia implements Serializable {
         this.asignatura = asignatura;
     }
 
-    public List<Prueba> getPruebaList() {
-        return pruebaList;
+    public ArrayList<Integer> getPruebaIds() {
+        return pruebaIds;
     }
 
-    public void setPruebaList(List<Prueba> pruebaList) {
-        this.pruebaList = pruebaList;
+    public void setPruebaIds(ArrayList<Integer> pruebaIds) {
+        this.pruebaIds = pruebaIds;
     }
 
     @Override
