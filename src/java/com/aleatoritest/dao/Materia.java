@@ -5,6 +5,8 @@
  */
 package com.aleatoritest.dao;
 
+import com.aleatoritest.dto.PreguntaDriver;
+import com.aleatoritest.dto.PruebaDriver;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -23,7 +25,9 @@ public class Materia implements Serializable {
     private Asignatura asignatura;
     private String nombre;
     private ArrayList<Integer> preguntaIds;
+    private ArrayList<Pregunta> preguntaList;
     private ArrayList<Integer> pruebaIds;
+    private ArrayList<Prueba> pruebaList;
 
     public Materia() {
     }
@@ -59,14 +63,6 @@ public class Materia implements Serializable {
         this.nombre = nombre;
     }
 
-    public ArrayList<Integer> getPreguntaIds() {
-        return preguntaIds;
-    }
-
-    public void setPreguntaIds(ArrayList<Integer> preguntaIds) {
-        this.preguntaIds = preguntaIds;
-    }
-
     public Asignatura getAsignatura() {
         return asignatura;
     }
@@ -75,12 +71,36 @@ public class Materia implements Serializable {
         this.asignatura = asignatura;
     }
 
+    public ArrayList<Integer> getPreguntaIds() {
+        return preguntaIds;
+    }
+
+    public void setPreguntaIds(ArrayList<Integer> preguntaIds) {
+        this.preguntaIds = preguntaIds;
+    }
+
     public ArrayList<Integer> getPruebaIds() {
         return pruebaIds;
     }
 
     public void setPruebaIds(ArrayList<Integer> pruebaIds) {
         this.pruebaIds = pruebaIds;
+    }
+    
+    public void makePreguntaList() {
+        preguntaList = new ArrayList<>(2);
+        PreguntaDriver pd = new PreguntaDriver();
+        preguntaIds.forEach((preguntaId) -> {
+            preguntaList.add(pd.buscarId(preguntaId));
+        });
+    }
+    
+    public void makePruebaList() {
+        pruebaList = new ArrayList<>(2);
+        PruebaDriver pd = new PruebaDriver();
+        pruebaIds.forEach((pruebaId) -> {
+            pruebaList.add(pd.buscarId(pruebaId));
+        });
     }
 
     @Override

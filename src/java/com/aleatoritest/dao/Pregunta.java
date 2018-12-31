@@ -5,9 +5,12 @@
  */
 package com.aleatoritest.dao;
 
+import com.aleatoritest.dto.MateriaDriver;
+import com.aleatoritest.dto.PruebaDriver;
+import com.aleatoritest.dto.UsuarioDriver;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -35,9 +38,12 @@ public class Pregunta implements Serializable {
     private boolean esVisible;
     private Date fecha;
     private Usuario usuario;
-    private List<Usuario> usuarioList;
-    private List<Materia> materiaList;
-    private List<Prueba> pruebaList;
+    private ArrayList<Integer> usuarioIds;
+    private ArrayList<Usuario> usuarioList;
+    private ArrayList<Integer> materiaIds;
+    private ArrayList<Materia> materiaList;
+    private ArrayList<Integer> pruebaIds;
+    private ArrayList<Prueba> pruebaList;
 
     public Pregunta() {
     }
@@ -121,28 +127,76 @@ public class Pregunta implements Serializable {
         this.fecha = fecha;
     }
 
-    public List<Usuario> getUsuarioList() {
+    public ArrayList<Usuario> getUsuarioList() {
         return usuarioList;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
+    public void setUsuarioList(ArrayList<Usuario> usuarioList) {
         this.usuarioList = usuarioList;
     }
     
-    public List<Materia> getMateriaList() {
+    public ArrayList<Materia> getMateriaList() {
         return materiaList;
     }
 
-    public void setMateriaList(List<Materia> materiaList) {
+    public void setMateriaList(ArrayList<Materia> materiaList) {
         this.materiaList = materiaList;
     }
 
-    public List<Prueba> getPruebaList() {
+    public ArrayList<Prueba> getPruebaList() {
         return pruebaList;
     }
 
-    public void setPruebaList(List<Prueba> pruebaList) {
+    public void setPruebaList(ArrayList<Prueba> pruebaList) {
         this.pruebaList = pruebaList;
+    }
+
+    public ArrayList<Integer> getUsuarioIds() {
+        return usuarioIds;
+    }
+
+    public void setUsuarioIds(ArrayList<Integer> usuarioIds) {
+        this.usuarioIds = usuarioIds;
+    }
+
+    public ArrayList<Integer> getMateriaIds() {
+        return materiaIds;
+    }
+
+    public void setMateriaIds(ArrayList<Integer> materiaIds) {
+        this.materiaIds = materiaIds;
+    }
+
+    public ArrayList<Integer> getPruebaIds() {
+        return pruebaIds;
+    }
+
+    public void setPruebaIds(ArrayList<Integer> pruebaIds) {
+        this.pruebaIds = pruebaIds;
+    }
+    
+    public void makeMateriaList() {
+        materiaList = new ArrayList<>(2);
+        MateriaDriver pd = new MateriaDriver();
+        materiaIds.forEach((materiaId) -> {
+            materiaList.add(pd.buscarId(materiaId));
+        });
+    }
+    
+    public void makeUsuarioList() {
+        usuarioList = new ArrayList<>(2);
+        UsuarioDriver pd = new UsuarioDriver();
+        usuarioIds.forEach((usuarioId) -> {
+            usuarioList.add(pd.buscarId(usuarioId));
+        });
+    }
+    
+    public void makePruebaList() {
+        pruebaList = new ArrayList<>(2);
+        PruebaDriver pd = new PruebaDriver();
+        pruebaIds.forEach((pruebaId) -> {
+            pruebaList.add(pd.buscarId(pruebaId));
+        });
     }
 
     public Usuario getUsuario() {

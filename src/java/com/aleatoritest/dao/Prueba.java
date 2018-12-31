@@ -86,13 +86,6 @@ public class Prueba implements Serializable {
     public void setPreguntaList(ArrayList<Pregunta> preguntaList) {
         this.preguntaList = preguntaList;
     }
-    public void makePreguntaList() {
-        preguntaList = new ArrayList<>(2);
-        PreguntaDriver pd = new PreguntaDriver();
-        preguntaIds.forEach((preguntaId) -> {
-            preguntaList.add(pd.buscarId(preguntaId));
-        });
-    }
 
     public ArrayList<Integer> getPreguntaIds() {
         return preguntaIds;
@@ -100,6 +93,14 @@ public class Prueba implements Serializable {
 
     public void setPreguntaIds(ArrayList<Integer> preguntaIds) {
         this.preguntaIds = preguntaIds;
+    }
+    
+    public void makePreguntaList() {
+        preguntaList = new ArrayList<>(2);
+        PreguntaDriver pd = new PreguntaDriver();
+        preguntaIds.forEach((preguntaId) -> {
+            preguntaList.add(pd.buscarId(preguntaId));
+        });
     }
 
     public Usuario getUsuario() {
