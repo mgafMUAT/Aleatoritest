@@ -15,8 +15,8 @@ import java.util.List;
  */
 //@NamedQueries({
 //    @NamedQuery(name = "Pregunta.findAll", query = "SELECT p FROM Pregunta p")
-//    , @NamedQuery(name = "Pregunta.findByPreguntaId", query = "SELECT p FROM Pregunta p WHERE p.preguntaPK.preguntaId = :preguntaId")
-//    , @NamedQuery(name = "Pregunta.findByUsuarioId", query = "SELECT p FROM Pregunta p WHERE p.preguntaPK.usuarioId = :usuarioId")
+//    , @NamedQuery(name = "Pregunta.findByPreguntaId", query = "SELECT p FROM Pregunta p WHERE p.preguntaId.preguntaId = :preguntaId")
+//    , @NamedQuery(name = "Pregunta.findByUsuarioId", query = "SELECT p FROM Pregunta p WHERE p.preguntaId.usuarioId = :usuarioId")
 //    , @NamedQuery(name = "Pregunta.findByPregunta", query = "SELECT p FROM Pregunta p WHERE p.pregunta = :pregunta")
 //    , @NamedQuery(name = "Pregunta.findByRespuestaCorrecta", query = "SELECT p FROM Pregunta p WHERE p.respuestaCorrecta = :respuestaCorrecta")
 //    , @NamedQuery(name = "Pregunta.findByAlternativa1", query = "SELECT p FROM Pregunta p WHERE p.alternativa1 = :alternativa1")
@@ -26,7 +26,7 @@ import java.util.List;
 //    , @NamedQuery(name = "Pregunta.findByFecha", query = "SELECT p FROM Pregunta p WHERE p.fecha = :fecha")})
 public class Pregunta implements Serializable {
 
-    protected PreguntaPK preguntaPK;
+    private Integer preguntaId;
     private String pregunta;
     private String respuestaCorrecta;
     private String alternativa1;
@@ -34,20 +34,20 @@ public class Pregunta implements Serializable {
     private String alternativa3;
     private boolean esVisible;
     private Date fecha;
+    private Usuario usuario;
     private List<Usuario> usuarioList;
     private List<Materia> materiaList;
     private List<Prueba> pruebaList;
-    private Usuario usuario;
 
     public Pregunta() {
     }
 
-    public Pregunta(PreguntaPK preguntaPK) {
-        this.preguntaPK = preguntaPK;
+    public Pregunta(Integer preguntaId) {
+        this.preguntaId = preguntaId;
     }
 
-    public Pregunta(PreguntaPK preguntaPK, String pregunta, String respuestaCorrecta, String alternativa1, String alternativa2, String alternativa3, boolean esVisible, Date fecha) {
-        this.preguntaPK = preguntaPK;
+    public Pregunta(Integer preguntaId, String pregunta, String respuestaCorrecta, String alternativa1, String alternativa2, String alternativa3, boolean esVisible, Date fecha) {
+        this.preguntaId = preguntaId;
         this.pregunta = pregunta;
         this.respuestaCorrecta = respuestaCorrecta;
         this.alternativa1 = alternativa1;
@@ -57,16 +57,12 @@ public class Pregunta implements Serializable {
         this.fecha = fecha;
     }
 
-    public Pregunta(int preguntaId, int usuarioId) {
-        this.preguntaPK = new PreguntaPK(preguntaId, usuarioId);
+    public Integer getPreguntaId() {
+        return preguntaId;
     }
 
-    public PreguntaPK getPreguntaPK() {
-        return preguntaPK;
-    }
-
-    public void setPreguntaPK(PreguntaPK preguntaPK) {
-        this.preguntaPK = preguntaPK;
+    public void setPreguntaId(Integer preguntaId) {
+        this.preguntaId = preguntaId;
     }
 
     public String getPregunta() {
@@ -160,7 +156,7 @@ public class Pregunta implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (preguntaPK != null ? preguntaPK.hashCode() : 0);
+        hash += (preguntaId != null ? preguntaId.hashCode() : 0);
         return hash;
     }
 
@@ -171,15 +167,12 @@ public class Pregunta implements Serializable {
             return false;
         }
         Pregunta other = (Pregunta) object;
-        if ((this.preguntaPK == null && other.preguntaPK != null) || (this.preguntaPK != null && !this.preguntaPK.equals(other.preguntaPK))) {
-            return false;
-        }
-        return true;
+        return !((this.preguntaId == null && other.preguntaId != null) || (this.preguntaId != null && !this.preguntaId.equals(other.preguntaId)));
     }
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.Pregunta[ preguntaPK=" + preguntaPK + " ]";
+        return "com.aleatoritest.dao.Pregunta[ preguntaId=" + preguntaId + " ]";
     }
     
 }

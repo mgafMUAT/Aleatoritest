@@ -14,35 +14,41 @@ import java.util.List;
  */
 //@NamedQueries({
 //    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")
-//    , @NamedQuery(name = "Materia.findByMateriaId", query = "SELECT m FROM Materia m WHERE m.materia_id.materiaId = :materiaId")
-//    , @NamedQuery(name = "Materia.findByAsignaturaId", query = "SELECT m FROM Materia m WHERE m.materia_id.asignaturaId = :asignaturaId")
+//    , @NamedQuery(name = "Materia.findByMateriaId", query = "SELECT m FROM Materia m WHERE m.materiaId.materiaId = :materiaId")
+//    , @NamedQuery(name = "Materia.findByAsignaturaId", query = "SELECT m FROM Materia m WHERE m.materiaId.asignaturaId = :asignaturaId")
 //    , @NamedQuery(name = "Materia.findByNombre", query = "SELECT m FROM Materia m WHERE m.nombre = :nombre")})
 public class Materia implements Serializable {
 
-    private Integer materia_id;
+    private Integer materiaId;
+    private Asignatura asignatura;
     private String nombre;
     private List<Pregunta> preguntaList;
-    private Asignatura asignatura;
     private List<Prueba> pruebaList;
 
     public Materia() {
     }
 
     public Materia(Integer materia_id) {
-        this.materia_id = materia_id;
+        this.materiaId = materia_id;
     }
 
     public Materia(Integer materia_id, String nombre) {
-        this.materia_id = materia_id;
+        this.materiaId = materia_id;
         this.nombre = nombre;
     }
 
-    public Integer getMateria_id() {
-        return materia_id;
+    public Materia(Integer materia_id, String nombre, Asignatura asignatura) {
+        this.materiaId = materia_id;
+        this.nombre = nombre;
+        this.asignatura = asignatura;
     }
 
-    public void setMateria_id(Integer materia_id) {
-        this.materia_id = materia_id;
+    public Integer getMateriaId() {
+        return materiaId;
+    }
+
+    public void setMateriaId(Integer materiaId) {
+        this.materiaId = materiaId;
     }
 
     public String getNombre() {
@@ -80,7 +86,7 @@ public class Materia implements Serializable {
     @Override
     public int hashCode() {
         Integer hash = 0;
-        hash += (materia_id != null ? materia_id.hashCode() : 0);
+        hash += (materiaId != null ? materiaId.hashCode() : 0);
         return hash;
     }
 
@@ -91,12 +97,12 @@ public class Materia implements Serializable {
             return false;
         }
         Materia other = (Materia) object;
-        return !((this.materia_id == null && other.materia_id != null) || (this.materia_id != null && !this.materia_id.equals(other.materia_id)));
+        return !((this.materiaId == null && other.materiaId != null) || (this.materiaId != null && !this.materiaId.equals(other.materiaId)));
     }
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.Materia[ materia_id=" + materia_id + " ]";
+        return "com.aleatoritest.dao.Materia[ materia_id=" + materiaId + " ]";
     }
     
 }

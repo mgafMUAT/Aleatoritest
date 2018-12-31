@@ -8,88 +8,49 @@ package com.aleatoritest.dao;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author MauricioGabriel
  */
-@Entity
-@Table(name = "prueba")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Prueba.findAll", query = "SELECT p FROM Prueba p")
-    , @NamedQuery(name = "Prueba.findByPruebaId", query = "SELECT p FROM Prueba p WHERE p.pruebaPK.pruebaId = :pruebaId")
-    , @NamedQuery(name = "Prueba.findByUsuarioId", query = "SELECT p FROM Prueba p WHERE p.pruebaPK.usuarioId = :usuarioId")
-    , @NamedQuery(name = "Prueba.findByMateriaId", query = "SELECT p FROM Prueba p WHERE p.pruebaPK.materiaId = :materiaId")
-    , @NamedQuery(name = "Prueba.findByNombre", query = "SELECT p FROM Prueba p WHERE p.nombre = :nombre")
-    , @NamedQuery(name = "Prueba.findByCantidadPreguntas", query = "SELECT p FROM Prueba p WHERE p.cantidadPreguntas = :cantidadPreguntas")
-    , @NamedQuery(name = "Prueba.findByFecha", query = "SELECT p FROM Prueba p WHERE p.fecha = :fecha")})
+//@NamedQueries({
+//    @NamedQuery(name = "Prueba.findAll", query = "SELECT p FROM Prueba p")
+//    , @NamedQuery(name = "Prueba.findByPruebaId", query = "SELECT p FROM Prueba p WHERE p.pruebaId.pruebaId = :pruebaId")
+//    , @NamedQuery(name = "Prueba.findByUsuarioId", query = "SELECT p FROM Prueba p WHERE p.pruebaId.usuarioId = :usuarioId")
+//    , @NamedQuery(name = "Prueba.findByMateriaId", query = "SELECT p FROM Prueba p WHERE p.pruebaId.materiaId = :materiaId")
+//    , @NamedQuery(name = "Prueba.findByNombre", query = "SELECT p FROM Prueba p WHERE p.nombre = :nombre")
+//    , @NamedQuery(name = "Prueba.findByCantidadPreguntas", query = "SELECT p FROM Prueba p WHERE p.cantidadPreguntas = :cantidadPreguntas")
+//    , @NamedQuery(name = "Prueba.findByFecha", query = "SELECT p FROM Prueba p WHERE p.fecha = :fecha")})
 public class Prueba implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected PruebaPK pruebaPK;
-    @Basic(optional = false)
-    @Column(name = "nombre")
-    private String nombre;
-    @Basic(optional = false)
-    @Column(name = "cantidadPreguntas")
-    private int cantidadPreguntas;
-    @Basic(optional = false)
-    @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
-    @JoinTable(name = "pruebahaspregunta", joinColumns = {
-        @JoinColumn(name = "prueba_id", referencedColumnName = "prueba_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "pregunta_id", referencedColumnName = "pregunta_id")})
-    @ManyToMany
-    private List<Pregunta> preguntaList;
-    @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    protected Integer pruebaId;
     private Usuario usuario;
-    @JoinColumn(name = "materia_id", referencedColumnName = "materia_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
     private Materia materia;
+    private String nombre;
+    private int cantidadPreguntas;
+    private Date fecha;
+    private List<Pregunta> preguntaList;
 
     public Prueba() {
     }
 
-    public Prueba(PruebaPK pruebaPK) {
-        this.pruebaPK = pruebaPK;
+    public Prueba(Integer pruebaId) {
+        this.pruebaId = pruebaId;
     }
 
-    public Prueba(PruebaPK pruebaPK, String nombre, int cantidadPreguntas, Date fecha) {
-        this.pruebaPK = pruebaPK;
+    public Prueba(Integer pruebaId, String nombre, int cantidadPreguntas, Date fecha) {
+        this.pruebaId = pruebaId;
         this.nombre = nombre;
         this.cantidadPreguntas = cantidadPreguntas;
         this.fecha = fecha;
     }
 
-    public Prueba(int pruebaId, int usuarioId, int materiaId) {
-        this.pruebaPK = new PruebaPK(pruebaId, usuarioId, materiaId);
+    public Integer getPruebaId() {
+        return pruebaId;
     }
 
-    public PruebaPK getPruebaPK() {
-        return pruebaPK;
-    }
-
-    public void setPruebaPK(PruebaPK pruebaPK) {
-        this.pruebaPK = pruebaPK;
+    public void setPruebaId(Integer pruebaId) {
+        this.pruebaId = pruebaId;
     }
 
     public String getNombre() {
@@ -116,7 +77,6 @@ public class Prueba implements Serializable {
         this.fecha = fecha;
     }
 
-    @XmlTransient
     public List<Pregunta> getPreguntaList() {
         return preguntaList;
     }
@@ -144,7 +104,7 @@ public class Prueba implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (pruebaPK != null ? pruebaPK.hashCode() : 0);
+        hash += (pruebaId != null ? pruebaId.hashCode() : 0);
         return hash;
     }
 
@@ -155,15 +115,12 @@ public class Prueba implements Serializable {
             return false;
         }
         Prueba other = (Prueba) object;
-        if ((this.pruebaPK == null && other.pruebaPK != null) || (this.pruebaPK != null && !this.pruebaPK.equals(other.pruebaPK))) {
-            return false;
-        }
-        return true;
+        return !((this.pruebaId == null && other.pruebaId != null) || (this.pruebaId != null && !this.pruebaId.equals(other.pruebaId)));
     }
 
     @Override
     public String toString() {
-        return "com.aleatoritest.dao.Prueba[ pruebaPK=" + pruebaPK + " ]";
+        return "com.aleatoritest.dao.Prueba[ pruebaId=" + pruebaId + " ]";
     }
     
 }

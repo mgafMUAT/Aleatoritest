@@ -45,7 +45,9 @@ public class UsuarioDriver extends DaoDriver<Usuario> {
         String nombre = rs.getString(4);
         String apellidos = rs.getString(5);
         boolean esProfesor = rs.getBoolean(6);
-        return new Usuario(usuario_id, correo, clave, nombre, apellidos, esProfesor);
+        Usuario nuevo = new Usuario(usuario_id, correo, clave, nombre, apellidos, esProfesor);
+        nuevo.setUsuarioIds(new JoinTableDriver(JoinTable.PROFESORHASAYUDANTE).listar(esProfesor, usuario_id));
+        return nuevo;
     }
 
     @Override

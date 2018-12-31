@@ -5,6 +5,7 @@
  */
 package com.aleatoritest.dto;
 
+import com.aleatoritest.dao.Asignatura;
 import com.aleatoritest.dao.Materia;
 import com.aleatoritest.dto.driver.DaoDriver;
 import java.sql.PreparedStatement;
@@ -19,7 +20,7 @@ public class MateriaDriver extends DaoDriver<Materia> {
 
     public MateriaDriver() {
         super();
-        super.attNum = 1;
+        super.attNum = 2;
         super.table = Materia.class;
     }
     
@@ -28,15 +29,17 @@ public class MateriaDriver extends DaoDriver<Materia> {
     @Override
     protected Materia map(ResultSet rs) throws SQLException {
         int id = rs.getInt(1);
-        String nombre = rs.getString(2);
-        return new Materia(id, nombre);
+        Asignatura asignatura = new AsignaturaDriver().buscarId(rs.getInt(2));
+        String nombre = rs.getString(3);
+        return new Materia(id, nombre, asignatura);
     }
 
     @Override
     protected PreparedStatement unMap(PreparedStatement pstm, Materia tabla, boolean id) throws SQLException {
-        pstm.setString(1, tabla.getNombre());
+        pstm.setInt(1, tabla.getAsignatura().getAsignaturaId());
+        pstm.setString(2, tabla.getNombre());
         if (id) {
-            pstm.setInt(2, tabla.getMateria_id());
+            pstm.setInt(3, tabla.getMateriaId());
         }
         return pstm;
     }

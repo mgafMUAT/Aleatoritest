@@ -29,8 +29,11 @@ public class Usuario implements Serializable {
     private String apellidos;
     private boolean esProfesor;
     private ArrayList<Pregunta> preguntaList;
+    private ArrayList<Integer> preguntaIds;
     private ArrayList<Usuario> usuarioList;
+    private ArrayList<Integer> usuarioIds;
     private ArrayList<Prueba> pruebaList;
+    private ArrayList<Integer> pruebaIds;
 
     public Usuario() {
     }
@@ -118,6 +121,30 @@ public class Usuario implements Serializable {
 
     public void setPruebaList(ArrayList<Prueba> pruebaList) {
         this.pruebaList = pruebaList;
+    }
+
+    public ArrayList<Integer> getPreguntaIds() {
+        return preguntaIds;
+    }
+
+    public void setPreguntaIds(ArrayList<Integer> preguntaIds) {
+        this.preguntaIds = preguntaIds;
+    }
+
+    public ArrayList<Integer> getUsuarioIds() {
+        return usuarioIds;
+    }
+
+    public void setUsuarioIds(ArrayList<Integer> usuarioIds) {
+        this.usuarioIds = usuarioIds;
+    }
+
+    public ArrayList<Integer> getPruebaIds() {
+        return pruebaIds;
+    }
+
+    public void setPruebaIds(ArrayList<Integer> pruebaIds) {
+        this.pruebaIds = pruebaIds;
     }
 
     @Override

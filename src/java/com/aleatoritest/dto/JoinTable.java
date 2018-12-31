@@ -10,7 +10,7 @@ package com.aleatoritest.dto;
  * @author MauricioGabriel
  */
 public enum JoinTable {
-    PROFESORHASESTUDIANTE,
+    PROFESORHASAYUDANTE,
     PREGUNTACOMPARTIDA,
     PREGUNTAHASMATERIA,
     PRUEBAHASPREGUNTA

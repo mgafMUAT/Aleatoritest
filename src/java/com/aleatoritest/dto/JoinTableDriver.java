@@ -49,7 +49,7 @@ public class JoinTableDriver {
 
     private String[] idColumns() {
         switch (jt) {
-            case PROFESORHASESTUDIANTE:
+            case PROFESORHASAYUDANTE:
                 return new String[]{"profesor_id", "ayudante_id"};
             case PREGUNTACOMPARTIDA:
                 return new String[]{"pregunta_id", "usuario_id"};
@@ -66,7 +66,7 @@ public class JoinTableDriver {
         try {
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-                list.add(rs.getInt(first ? 1 : 2));
+                list.add(rs.getInt(first ? 2 : 1));
             }
         } catch (SQLException ex) {
             printErr(ex);
