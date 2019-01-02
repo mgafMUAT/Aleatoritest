@@ -5,20 +5,18 @@
  */
 package com.aleatoritest;
 
-import com.aleatoritest.dto.UsuarioDriver;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author MauricioGabriel
  */
-public class Ingreso extends HttpServlet {
+public class LogOut extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,22 +30,9 @@ public class Ingreso extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("email");
-        String pass = request.getParameter("pass");
-        
-        Integer id = new UsuarioDriver().validar(email, pass);
-
-        if (id != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("userId", id);
-            session.setMaxInactiveInterval(240);
-            response.sendRedirect("home");
-        } else {
-            PrintWriter out = response.getWriter();
-            out.println("<meta http-equiv='refresh' content='3;URL=login.html'>");//redirects after 3 seconds
-            out.println("<h1>Datos erróneos</h1>");
-            out.println("<h2>Por favor, inténtelo de nuevo</h2>");
-        }
+        request.removeAttribute("user");
+        request.getSession().invalidate();
+        response.sendRedirect("login.html");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

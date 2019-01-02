@@ -23,18 +23,21 @@ public class UsuarioDriver extends DaoDriver<Usuario> {
         super.attNum = 5;
     }
     
-    public boolean validar(String correo, String clave) {
-        String sql = listSQL() + " where correo = ? and clave = ?";
+    public Integer validar(String correo, String clave) {
+        Integer id = null;
+        String sql = listId() + " where correo = ? and clave = ?";
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, correo);
             pstm.setString(2, clave);
             ResultSet rs = pstm.executeQuery();
-            return rs.next();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
         } catch (SQLException ex) {
             printErr(ex);
-            return false;
         }
+        return id;
     }
 
     @Override

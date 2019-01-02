@@ -17,6 +17,10 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>LogOut</servlet-name>
+        <servlet-class>com.aleatoritest.LogOut</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Ingreso</servlet-name>
         <url-pattern>/ingreso</url-pattern>
@@ -26,8 +30,8 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <servlet-name>LogOut</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -35,6 +39,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>/login.html</welcome-file>
     </welcome-file-list>
 </web-app>
