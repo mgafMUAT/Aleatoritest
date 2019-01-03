@@ -9,6 +9,7 @@ import com.aleatoritest.dto.PreguntaDriver;
 import com.aleatoritest.dto.PruebaDriver;
 import com.aleatoritest.dto.driver.DaoDriver;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MauricioGabriel
  */
-public class Borrar extends HttpServlet {
+public class Grabar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,10 +32,19 @@ public class Borrar extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        boolean preg = request.getParameter("pregoprueba").equals("1");
-        DaoDriver pd = preg ? new PreguntaDriver() : new PruebaDriver();
-        int prId = Integer.parseInt(request.getParameter("prId"));
-        int userId = (int) request.getSession(false).getAttribute("userId");
+        String tabla = request.getParameter("tabla");
+        
+    }
+    
+    private DaoDriver selectTable(String table) {
+        switch (table) {
+            case "preg":
+                return new PreguntaDriver();
+            case "prueba":
+                return new PruebaDriver();
+            default:
+                return null;
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

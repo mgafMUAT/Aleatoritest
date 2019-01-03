@@ -29,6 +29,14 @@
         <servlet-name>Borrar</servlet-name>
         <servlet-class>com.aleatoritest.Borrar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Editar</servlet-name>
+        <servlet-class>com.aleatoritest.Editar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Grabar</servlet-name>
+        <servlet-class>com.aleatoritest.Grabar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Ingreso</servlet-name>
         <url-pattern>/ingreso</url-pattern>
@@ -48,6 +56,14 @@
     <servlet-mapping>
         <servlet-name>Borrar</servlet-name>
         <url-pattern>/borrar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Editar</servlet-name>
+        <url-pattern>/editar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Grabar</servlet-name>
+        <url-pattern>/grabar</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

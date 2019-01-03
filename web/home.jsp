@@ -85,24 +85,47 @@
                                     <form method="post" action="editar">
                                         <input type="hidden" name="pregoprueba" value="1">
                                         <input type="hidden" name="prId" value="${preg.preguntaId}"> 
-                                        <button type="submit" class="btn btn-info btn-sm">
+                                        <button type="submit" class="btn btn-info">
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                     </form>
                                     <form method="post" action="borrar">
                                         <input type="hidden" name="pregoprueba" value="1">
                                         <input type="hidden" name="prId" value="${preg.preguntaId}"> 
-                                        <button type="submit" class="btn btn-danger btn-sm">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmPreg">
                                             <span class="glyphicon glyphicon-floppy-remove"></span>
                                         </button>
+                                        <!--Confirmation modal-->
+                                        <div class="modal fade" id="confirmPreg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <strong>ADVERTENCIA</strong>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>¿Está completamente seguro de que desea eliminar esta pregunta?</p>
+                                                        <p>"${preg.pregunta}"</p>
+                                                        <p><strong>Esta acción no se puede deshacer</strong></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-deafult" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </form>
                                 </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
+                <form action="editar" method="post">
+                    <input type="hidden" name="pregoprueba" value="1">
+                    <button type="submit" class="btn btn-primary btn-lg">Crear Pregunta</button>
+                </form>
             </div>
-            <!--Filtering script-->
+            <!--Filtering & modal script-->
             <script>
                 $(document).ready(function () {
                     $("#preguntasIn").on("keyup", function () {
@@ -200,22 +223,45 @@
                                         <form method="post" action="editar">
                                             <input type="hidden" name="pregoprueba" value="0">
                                             <input type="hidden" name="prId" value="${prueba.pruebaId}"> 
-                                            <button type="submit" class="btn btn-info btn-sm">
+                                            <button type="submit" class="btn btn-info">
                                                 <span class="glyphicon glyphicon-edit"></span>
                                             </button>
                                         </form>
                                         <form method="post" action="borrar">
                                             <input type="hidden" name="pregoprueba" value="0">
                                             <input type="hidden" name="prId" value="${prueba.pruebaId}"> 
-                                            <button type="submit" class="btn btn-danger btn-sm">
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmPrueba">
                                                 <span class="glyphicon glyphicon-floppy-remove"></span>
                                             </button>
+                                            <!--Confirmation modal-->
+                                            <div class="modal fade" id="confirmPrueba" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <strong>ADVERTENCIA</strong>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>¿Está completamente seguro de que desea eliminar esta pregunta?</p>
+                                                            <p>"${prueba.nombre}"</p>
+                                                            <p><strong>Esta acción no se puede deshacer</strong></p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </form>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
+                <form action="editar" method="post">
+                    <input type="hidden" name="pregoprueba" value="0">
+                    <button type="submit" class="btn btn-primary btn-lg">Crear Prueba</button>
+                </form>
                 </div>
                 <!--Filtering script-->
                 <script>
