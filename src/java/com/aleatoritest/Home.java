@@ -7,7 +7,7 @@ package com.aleatoritest;
 
 import com.aleatoritest.dao.Pregunta;
 import com.aleatoritest.dao.Usuario;
-import com.aleatoritest.dto.UsuarioDriver;
+import com.aleatoritest.dto.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -38,11 +38,13 @@ public class Home extends HttpServlet {
             UsuarioDriver ud = new UsuarioDriver();
             int userId = (int) request.getSession().getAttribute("userId");
             Usuario user = prepareUser(ud.buscarId(userId));
+            ArrayList<Integer> ocupadas = new JoinTableDriver(JoinTable.PREGUNTACOMPARTIDA).listar(false, userId);
+            request.setAttribute("ocupadas", ocupadas);
             request.setAttribute("user", user);
             request.setAttribute("compartibles", listarPreguntas(userId));
             request.getRequestDispatcher("home.jsp").forward(request, response);
         } else {
-            response.sendRedirect("login.html");
+            response.sendRedirect("login.jsp");
         }
     }
     
@@ -52,6 +54,14 @@ public class Home extends HttpServlet {
         user.makeUsuarioList();
         user.getPreguntaList().forEach((pregunta) -> pregunta.makeMateriaList());
         return user;
+    }
+    private ArrayList<Pregunta> listarPreguntas(int userId) {
+        ArrayList<Pregunta> pregs = new ArrayList<>();
+        new PreguntaDriver().listar().stream().filter((pregunta) -> (pregunta.getEsVisible() && pregunta.getUsuario().getUsuarioId() != userId)).forEachOrdered((pregunta) -> {
+            pregs.add(pregunta);
+        });
+        pregs.forEach((preg) -> {preg.makeMateriaList();});
+        return pregs;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -93,13 +103,5 @@ public class Home extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private ArrayList<Pregunta> listarPreguntas(int userId) {
-        ArrayList<Pregunta> pregs = new ArrayList<>();
-        new com.aleatoritest.dto.PreguntaDriver().listar().stream().filter((pregunta) -> (pregunta.getEsVisible() && pregunta.getUsuario().getUsuarioId() != userId)).forEachOrdered((pregunta) -> {
-            pregs.add(pregunta);
-        });
-        pregs.forEach((preg) -> {preg.makeMateriaList();});
-        return pregs;
-    }
 
 }

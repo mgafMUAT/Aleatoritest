@@ -81,7 +81,7 @@ public class JoinTableDriver {
         try {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setInt(1, id1);
-            pstm.setInt(1, id2);
+            pstm.setInt(2, id2);
             int update = pstm.executeUpdate();
             return update != 0;
 

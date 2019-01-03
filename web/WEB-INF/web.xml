@@ -21,6 +21,14 @@
         <servlet-name>LogOut</servlet-name>
         <servlet-class>com.aleatoritest.LogOut</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Compartir</servlet-name>
+        <servlet-class>com.aleatoritest.Compartir</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Borrar</servlet-name>
+        <servlet-class>com.aleatoritest.Borrar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Ingreso</servlet-name>
         <url-pattern>/ingreso</url-pattern>
@@ -33,12 +41,20 @@
         <servlet-name>LogOut</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Compartir</servlet-name>
+        <url-pattern>/compartir</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Borrar</servlet-name>
+        <url-pattern>/borrar</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>/login.html</welcome-file>
+        <welcome-file>/login.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

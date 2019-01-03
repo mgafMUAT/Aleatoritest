@@ -5,20 +5,20 @@
  */
 package com.aleatoritest;
 
-import com.aleatoritest.dto.UsuarioDriver;
+import com.aleatoritest.dto.PreguntaDriver;
+import com.aleatoritest.dto.PruebaDriver;
+import com.aleatoritest.dto.driver.DaoDriver;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author MauricioGabriel
  */
-public class Ingreso extends HttpServlet {
+public class Borrar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,25 +31,11 @@ public class Ingreso extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("email");
-        String pass = request.getParameter("pass");
-        
-        Integer id = new UsuarioDriver().validar(email, pass);
-
-        if (id != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("userId", id);
-            session.setMaxInactiveInterval(360);
-            response.sendRedirect("home");
-        } else {
-//            PrintWriter out = response.getWriter();
-//            out.println("<meta http-equiv='refresh' content='3;URL=login.jsp'>");
-//            out.println("<h1>Datos erróneos</h1>");
-//            out.println("<h2>Por favor, inténtelo de nuevo</h2>");
-            request.setAttribute("wrong", true);
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
+        boolean preg = request.getParameter("pregoprueba").equals("1");
+        DaoDriver pd = preg ? new PreguntaDriver() : new PruebaDriver();
+        int prId = Integer.parseInt(request.getParameter("prId"));
+        int userId = (int) request.getSession(false).getAttribute("userId");
+        System.out.println("" + preg + pd + prId + userId);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

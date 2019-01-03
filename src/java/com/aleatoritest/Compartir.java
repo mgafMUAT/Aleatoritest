@@ -5,20 +5,19 @@
  */
 package com.aleatoritest;
 
-import com.aleatoritest.dto.UsuarioDriver;
+import com.aleatoritest.dto.JoinTable;
+import com.aleatoritest.dto.JoinTableDriver;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author MauricioGabriel
  */
-public class Ingreso extends HttpServlet {
+public class Compartir extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,25 +30,16 @@ public class Ingreso extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("email");
-        String pass = request.getParameter("pass");
-        
-        Integer id = new UsuarioDriver().validar(email, pass);
-
-        if (id != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("userId", id);
-            session.setMaxInactiveInterval(360);
-            response.sendRedirect("home");
+        JoinTableDriver jtd = new JoinTableDriver(JoinTable.PREGUNTACOMPARTIDA);
+        int idp = Integer.parseInt(request.getParameter("preguntaId"));
+        int idu = (int) request.getSession(false).getAttribute("userId");
+        boolean esCompartida = request.getParameter("esCompartida").equals("1");
+        if (!esCompartida) {
+            jtd.guardar(idp, idu);
         } else {
-//            PrintWriter out = response.getWriter();
-//            out.println("<meta http-equiv='refresh' content='3;URL=login.jsp'>");
-//            out.println("<h1>Datos erróneos</h1>");
-//            out.println("<h2>Por favor, inténtelo de nuevo</h2>");
-            request.setAttribute("wrong", true);
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            jtd.borrar(idp, idu);
         }
+        response.sendRedirect("home");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
