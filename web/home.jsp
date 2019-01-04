@@ -31,6 +31,11 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="home">Home</a></li>
                 </ul>
+                <c:if test="${user.esProfesor}">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a>Registrar ayudante</a></li>
+                    </ul>
+                </c:if>
                 <ul class="nav navbar-nav navbar-right">
                     <a href="logout" class="btn btn-danger navbar-btn">
                         <span class="glyphicon glyphicon-log-in"></span> Salir
@@ -44,6 +49,7 @@
             <li class="active"><a data-toggle="tab" href="#preguntas">Preguntas</a></li>
             <li ${user.esProfesor ? '' : 'class="disabled"'}><a ${user.esProfesor ? 'data-toggle="tab" href="#compartidas"' : ''}>Preguntas Compartidas</a></li>
             <li ${user.esProfesor ? '' : 'class="disabled"'}><a ${user.esProfesor ? 'data-toggle="tab" href="#pruebas"' : ''}>Pruebas</a></li>
+            <li><a data-toggle="tab" href="#preguntas">${user.esProfesor ? 'Ayudantes' : 'Profesores'}</a></li>
         </ul>
         <div class="tab-content">
             <!--Preguntas tab-->
@@ -65,7 +71,7 @@
                         </tr>
                     </thead>
                     <tbody id="preguntasT">
-                        <c:forEach items="${user.preguntaList}" var="preg">
+                        <c:forEach items="${user.preguntaList}" var="preg" varStatus="count">
                             <tr>
                                 <td>${preg.materiaList[0].nombre}</td>
                                 <td>${preg.pregunta}</td>
@@ -92,11 +98,11 @@
                                     <form method="post" action="borrar">
                                         <input type="hidden" name="pregoprueba" value="1">
                                         <input type="hidden" name="prId" value="${preg.preguntaId}"> 
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmPreg">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#${'confirmPreg'.concat(count.index)}">
                                             <span class="glyphicon glyphicon-floppy-remove"></span>
                                         </button>
                                         <!--Confirmation modal-->
-                                        <div class="modal fade" id="confirmPreg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="${'confirmPreg'.concat(count.index)}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -211,7 +217,7 @@
                             </tr>
                         </thead>
                         <tbody id="pruebasT">
-                            <c:forEach items="${user.pruebaList}" var="prueba">
+                            <c:forEach items="${user.pruebaList}" var="prueba" varStatus="count">
                                 <tr>
                                     <td>${prueba.nombre}</td>
                                     <td>${prueba.materia.nombre}</td>
@@ -230,11 +236,11 @@
                                         <form method="post" action="borrar">
                                             <input type="hidden" name="pregoprueba" value="0">
                                             <input type="hidden" name="prId" value="${prueba.pruebaId}"> 
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmPrueba">
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#${'confirmPrueba'.concat(count.index)}">
                                                 <span class="glyphicon glyphicon-floppy-remove"></span>
                                             </button>
                                             <!--Confirmation modal-->
-                                            <div class="modal fade" id="confirmPrueba" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="${'confirmPrueba'.concat(count.index)}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -258,10 +264,10 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                <form action="editar" method="post">
-                    <input type="hidden" name="pregoprueba" value="0">
-                    <button type="submit" class="btn btn-primary btn-lg">Crear Prueba</button>
-                </form>
+                    <form action="editar" method="post">
+                        <input type="hidden" name="pregoprueba" value="0">
+                        <button type="submit" class="btn btn-primary btn-lg">Crear Prueba</button>
+                    </form>
                 </div>
                 <!--Filtering script-->
                 <script>
@@ -275,6 +281,45 @@
                     });
                 </script>
             </c:if>
+
+            <!--Ayudantes / Profesores tab-->
+            <div id="usuarios" class="tab-pane fade">
+                <h3>${user.esProfesor ? 'Ayudantes' : 'Profesores'}</h3>
+                <input class="form-control" id="usuariosIn" type="text" placeholder="Filtrar">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>correo</th>
+                            <th>Contactar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usuariosT">
+                        <c:forEach items="${user.usuarioList}" var="ulist">
+                            <tr>
+                                <td>${ulist.nombre} ${ulist.apellidos}</td>
+                                <td>${ulist.correo}</td>
+                                <td>
+                                    <a href="mailto:${ulist.correo}" class="btn btn-info">
+                                        <span class="glyphicon glyphicon-envelope"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <!--Filtering script-->
+            <script>
+                $(document).ready(function () {
+                    $("#usuariosIn").on("keyup", function () {
+                        var value = $(this).val().toLowerCase();
+                        $("#usuariosT tr").filter(function () {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                        });
+                    });
+                });
+            </script>
         </div>
     </body>
 </html>

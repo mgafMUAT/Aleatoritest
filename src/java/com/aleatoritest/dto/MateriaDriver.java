@@ -23,8 +23,13 @@ public class MateriaDriver extends DaoDriver<Materia> {
         super.attNum = 2;
         super.table = Materia.class;
     }
-    
-    
+
+    @Override
+    protected String SQLfields(boolean and) {
+        String sql = super.SQLfields(and);
+        sql = sql.replace("asignatura", "asignatura_id");
+        return sql;
+    }
 
     @Override
     protected Materia map(ResultSet rs) throws SQLException {

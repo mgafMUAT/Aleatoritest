@@ -42,6 +42,7 @@ public class Editar extends HttpServlet {
         } else {
             Prueba p = (prId == null ? new Prueba() : new PruebaDriver().buscarId(Integer.parseInt(prId)));
             request.setAttribute("prueba", p);
+            request.setAttribute("pregs", new PreguntaDriver().listar());
             request.getRequestDispatcher("editorPrueba.jsp").forward(request, response);
         }
     }

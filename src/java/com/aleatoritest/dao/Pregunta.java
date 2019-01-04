@@ -30,6 +30,7 @@ import java.util.ArrayList;
 public class Pregunta implements Serializable {
 
     private Integer preguntaId;
+    private Usuario usuario;
     private String pregunta;
     private String respuestaCorrecta;
     private String alternativa1;
@@ -37,7 +38,6 @@ public class Pregunta implements Serializable {
     private String alternativa3;
     private boolean esVisible;
     private Date fecha;
-    private Usuario usuario;
     private ArrayList<Integer> usuarioIds;
     private ArrayList<Usuario> usuarioList;
     private ArrayList<Integer> materiaIds;

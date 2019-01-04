@@ -5,6 +5,8 @@
  */
 package com.aleatoritest;
 
+import com.aleatoritest.dto.JoinTable;
+import com.aleatoritest.dto.JoinTableDriver;
 import com.aleatoritest.dto.PreguntaDriver;
 import com.aleatoritest.dto.PruebaDriver;
 import com.aleatoritest.dto.driver.DaoDriver;
@@ -34,7 +36,10 @@ public class Borrar extends HttpServlet {
         boolean preg = request.getParameter("pregoprueba").equals("1");
         DaoDriver pd = preg ? new PreguntaDriver() : new PruebaDriver();
         int prId = Integer.parseInt(request.getParameter("prId"));
-        int userId = (int) request.getSession(false).getAttribute("userId");
+        JoinTableDriver jtd = new JoinTableDriver(JoinTable.PRUEBAHASPREGUNTA);
+        jtd.borrar(!preg, prId);
+        pd.borrar(prId);
+        response.sendRedirect("home");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

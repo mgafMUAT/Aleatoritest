@@ -25,6 +25,13 @@ public class PreguntaDriver extends DaoDriver<Pregunta> {
     }
 
     @Override
+    protected String SQLfields(boolean and) {
+        String sql = super.SQLfields(and);
+        sql = sql.replace("usuario", "usuario_id");
+        return sql;
+    }
+
+    @Override
     protected Pregunta map(ResultSet rs) throws SQLException {
         int pregunta_id = rs.getInt(1);
         Usuario usuario = new UsuarioDriver().buscarId(rs.getInt(2));

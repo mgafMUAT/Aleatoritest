@@ -26,6 +26,14 @@ public class PruebaDriver extends DaoDriver<Prueba> {
     }
 
     @Override
+    protected String SQLfields(boolean and) {
+        String sql = super.SQLfields(and);
+        sql = sql.replace("usuario", "usuario_id");
+        sql = sql.replace("maretia", "materia_id");
+        return sql;
+    }
+
+    @Override
     protected Prueba map(ResultSet rs) throws SQLException {
         int prueba_id = rs.getInt(1);
         Usuario usuario = new UsuarioDriver().buscarId(rs.getInt(2));

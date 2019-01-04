@@ -21,7 +21,7 @@
         <title>Editor de Preguntas</title>
     </head>
     <body>
-        <form action="grabar">
+        <form action="grabar" method="post">
             <div class="form-group">
                 <label for="pregunta">Pregunta:</label>
                 <textarea name="pregunta" class="form-control" id="pregunta" required="true">
@@ -30,25 +30,25 @@
             </div>
             <div class="form-group">
                 <label for="correcta">Respuesta correcta:</label>
-                <input type="text" class="form-control" id="correcta" value="${preg.respuestaCorrecta}" required="true">
+                <input type="text" class="form-control" id="correcta" name="correcta" value="${preg.respuestaCorrecta}" required="true">
             </div>
             <div class="form-group">
                 <label for="alt1">Respuesta incorrecta 1:</label>
-                <input type="text" class="form-control" id="alt1" value="${preg.alternativa1}" required="true">
+                <input type="text" class="form-control" id="alt1" name="alt1" value="${preg.alternativa1}" required="true">
             </div>
             <div class="form-group">
                 <label for="alt2">Respuesta incorrecta 2:</label>
-                <input type="text" class="form-control" id="alt2" value="${preg.alternativa2}" required="true">
+                <input type="text" class="form-control" id="alt2" name="alt2" value="${preg.alternativa2}" required="true">
             </div>
             <div class="form-group">
                 <label for="alt3">Respuesta incorrecta 3:</label>
-                <input type="text" class="form-control" id="alt3" value="${preg.alternativa3}" required="true">
+                <input type="text" class="form-control" id="alt3" name="alt3" value="${preg.alternativa3}" required="true">
             </div>
             <div class="form-group">
                 <label for="sel1">Materia:</label>
                 <select class="form-control" id="sel1" name="materia">
                     <c:forEach items="${materias}" var="materia">
-                        <option>${materia.nombre}</option>
+                        <option>${materia.materiaId} - ${materia.nombre}</option>
                     </c:forEach>
                 </select>
             </div>

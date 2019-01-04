@@ -45,6 +45,9 @@
                     <button type="submit" class="btn btn-default">Ingresar</button>
                 </div>
             </div>
+            <div style="text-align: center">
+                ¿Nuevo en AleatoriTest? <h6><a href="registro">Regístrese</a></h6>
+            </div>
         </form>
     </body>
 </html>

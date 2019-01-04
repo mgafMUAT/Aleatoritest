@@ -58,16 +58,26 @@ public abstract class DaoDriver<T> {
         String sql = "insert into " + table.getSimpleName().toLowerCase() + values;
         return sql;
     }
-
-    protected String editSQL() {
-        String update = "update " + table.getSimpleName().toLowerCase();
-        String set = " set ";
+    
+    protected String SQLfields(boolean and) {
+        String u = "";
+        String sep = and ? " and " : ", ";
         Field[] fields = table.getDeclaredFields();
         for (int i = 1; i < attNum; i++) {
-            set += fields[i].getName() + " = ?, ";
+            u += fields[i].getName() + " = ?" + sep;
         }
-        set += fields[attNum].getName() + " = ?";
-        String sql = update + set + byId();
+        u += fields[attNum].getName() + " = ?";
+        return u;
+    }
+    
+    protected String updateSQL() {
+        return "update " + table.getSimpleName().toLowerCase();
+    }
+
+    protected String editSQL() {
+        String set = " set ";
+        set += SQLfields(false);
+        String sql = updateSQL() + set + byId();
         return sql;
     }
 
@@ -121,16 +131,22 @@ public abstract class DaoDriver<T> {
         return list;
     }
 
-    public boolean guardar(T nuevo) {
+    public int guardar(T nuevo) {
         try {
             PreparedStatement pstm = conn.prepareStatement(insertSQL());
             pstm = unMap(pstm, nuevo, false);
-            int update = pstm.executeUpdate();
-            return update != 0;
-
+            System.out.println(pstm);
+            String sql = listId() + " where " + SQLfields(true);
+            pstm = conn.prepareStatement(sql);
+            pstm = unMap(pstm, nuevo, false);
+            ResultSet idrs = pstm.executeQuery();
+            if (!idrs.next()) {
+                return -1;
+            }
+            return idrs.getInt(1);
         } catch (SQLException ex) {
             printErr(ex);
-            return false;
+            return -1;
         }
     }
 

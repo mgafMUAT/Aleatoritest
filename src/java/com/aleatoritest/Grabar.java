@@ -5,11 +5,17 @@
  */
 package com.aleatoritest;
 
+import com.aleatoritest.dao.Pregunta;
+import com.aleatoritest.dao.Prueba;
+import com.aleatoritest.dto.JoinTable;
+import com.aleatoritest.dto.JoinTableDriver;
 import com.aleatoritest.dto.PreguntaDriver;
 import com.aleatoritest.dto.PruebaDriver;
+import com.aleatoritest.dto.UsuarioDriver;
 import com.aleatoritest.dto.driver.DaoDriver;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,10 +39,15 @@ public class Grabar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String tabla = request.getParameter("tabla");
-        
+        DaoDriver driver = selectDriver(tabla);
+        String id = request.getParameter("id");
+        boolean nuevo = id.equals("");
+        Object entidad = nuevo ? selectTable(tabla) : driver.buscarId(Integer.parseInt(id));
+        request = makeTable(tabla, entidad, request, driver, nuevo);
+        response.sendRedirect("home");
     }
-    
-    private DaoDriver selectTable(String table) {
+
+    private DaoDriver selectDriver(String table) {
         switch (table) {
             case "preg":
                 return new PreguntaDriver();
@@ -45,6 +56,84 @@ public class Grabar extends HttpServlet {
             default:
                 return null;
         }
+    }
+
+    private Object selectTable(String table) {
+        switch (table) {
+            case "preg":
+                return new Pregunta();
+            case "prueba":
+                return new Prueba();
+            default:
+                return null;
+        }
+    }
+
+    private HttpServletRequest makeTable(String tabla, Object entidad,
+            HttpServletRequest request, DaoDriver driver, boolean nuevo) {
+        switch (tabla) {
+            case "preg":
+                Pregunta preg = (Pregunta) entidad;
+                preg.setPregunta(request.getParameter("pregunta"));
+                preg.setRespuestaCorrecta(request.getParameter("correcta"));
+                preg.setAlternativa1(request.getParameter("alt1"));
+                preg.setAlternativa2(request.getParameter("alt2"));
+                preg.setAlternativa3(request.getParameter("alt3"));
+                preg.setEsVisible(request.getParameter("visible") != null);
+                preg.setUsuario(new UsuarioDriver().buscarId((int) request.getSession(false).getAttribute("userId")));
+                if (nuevo) {
+                    preg.setFecha(new java.util.Date());
+                }
+                JoinTableDriver jtd = new JoinTableDriver(JoinTable.PREGUNTAHASMATERIA);
+                int matId = Integer.parseInt(request.getParameter("materia").split(" - ")[0]);
+                if (!nuevo) {
+                    jtd.borrar(preg.getPreguntaId(), preg.getMateriaIds().get(0));
+                }
+                preg.setMateriaIds(new ArrayList<>(Arrays.asList(matId)));
+                int prid;
+                if (nuevo) {
+                    prid = driver.guardar(preg);
+                } else {
+                    driver.editar(preg);
+                    prid = preg.getPreguntaId();
+                }
+                jtd.guardar(prid, matId);
+                break;
+            case "prueba":
+                Prueba prueba = (Prueba) entidad;
+                prueba.setNombre(request.getParameter("nombre"));
+                jtd = new JoinTableDriver(JoinTable.PRUEBAHASPREGUNTA);
+                if (!nuevo) {
+                    jtd.borrar(true, prueba.getPruebaId());
+                }
+                ArrayList<Integer> pregIds = new ArrayList<>();
+                String[] params = request.getParameterValues("preguntas");
+                for (String param : params) {
+                    String pId = param.split(" - ")[0];
+                    pregIds.add(Integer.parseInt(pId));
+                }
+                prueba.setCantidadPreguntas(params.length);
+                prueba.setPreguntaIds(pregIds);
+                matId = Integer.parseInt(request.getParameter("materia").split(" - ")[0]);
+                prueba.setMateria(new com.aleatoritest.dto.MateriaDriver().buscarId(matId));
+                if (prueba.getFecha() == null) {
+                    prueba.setFecha(new java.util.Date());
+                }
+                prueba.setUsuario(new UsuarioDriver().buscarId((int) request.getSession(false).getAttribute("userId")));
+                int pid;
+                if (nuevo) {
+                    pid = driver.guardar(prueba);
+                } else {
+                    driver.editar(prueba);
+                    pid = prueba.getPruebaId();
+                }
+                pregIds.forEach((pregId) -> {
+                    jtd.guardar(pid, pregId);
+                });
+                break;
+            default:
+        }
+        return request;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
