@@ -156,6 +156,7 @@ public abstract class DaoDriver<T> {
         try {
             PreparedStatement pstm = conn.prepareStatement(editSQL());
             pstm = unMap(pstm, mod, true);
+            System.out.println(pstm);
             int update = pstm.executeUpdate();
             return update != 0;
 

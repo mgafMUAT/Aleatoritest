@@ -78,8 +78,11 @@ public class Grabar extends HttpServlet {
                 preg.setPregunta(request.getParameter("pregunta").trim());
                 preg.setRespuestaCorrecta(request.getParameter("correcta"));
                 preg.setAlternativa1(request.getParameter("alt1"));
+                System.out.println(preg.getAlternativa1());
                 preg.setAlternativa2(request.getParameter("alt2"));
+                System.out.println(preg.getAlternativa2());
                 preg.setAlternativa3(request.getParameter("alt3"));
+                System.out.println(preg.getAlternativa3());
                 preg.setEsVisible(request.getParameter("visible") != null);
                 preg.setUsuario(new UsuarioDriver().buscarId((int) request.getSession(false).getAttribute("userId")));
                 if (nuevo) {
@@ -102,7 +105,7 @@ public class Grabar extends HttpServlet {
                 break;
             case "prueba":
                 Prueba prueba = (Prueba) entidad;
-                prueba.setNombre(request.getParameter("nombre"));
+                prueba.setNombre(request.getParameter("nombre").trim());
                 jtd = new JoinTableDriver(JoinTable.PRUEBAHASPREGUNTA);
                 if (!nuevo) {
                     jtd.borrar(true, prueba.getPruebaId());

@@ -43,7 +43,7 @@
                     </c:forEach>
                 </select>
             </div>
-            <input type="hidden" name="tabla" value="preg">
+            <input type="hidden" name="tabla" value="prueba">
             <input type="hidden" name="id" value="${prueba.pruebaId}">
             <button type="submit" class="btn btn-success">Guardar</button>
             <a href="home" class="btn btn-warning">Cancelar</a>

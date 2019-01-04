@@ -56,8 +56,8 @@ public class PreguntaDriver extends DaoDriver<Pregunta> {
         pstm.setString(2, tabla.getPregunta());
         pstm.setString(3, tabla.getRespuestaCorrecta());
         pstm.setString(4, tabla.getAlternativa1());
-        pstm.setString(5, tabla.getAlternativa1());
-        pstm.setString(6, tabla.getAlternativa1());
+        pstm.setString(5, tabla.getAlternativa2());
+        pstm.setString(6, tabla.getAlternativa3());
         pstm.setBoolean(7, tabla.getEsVisible());
         pstm.setDate(8, new java.sql.Date(tabla.getFecha().getTime()));
         if (id) {

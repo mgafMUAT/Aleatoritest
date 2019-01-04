@@ -29,7 +29,7 @@ public class PruebaDriver extends DaoDriver<Prueba> {
     protected String SQLfields(boolean and) {
         String sql = super.SQLfields(and);
         sql = sql.replace("usuario", "usuario_id");
-        sql = sql.replace("maretia", "materia_id");
+        sql = sql.replace("materia", "materia_id");
         return sql;
     }
 
