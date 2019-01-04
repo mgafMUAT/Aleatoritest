@@ -74,7 +74,7 @@ public class Grabar extends HttpServlet {
         switch (tabla) {
             case "preg":
                 Pregunta preg = (Pregunta) entidad;
-                preg.setPregunta(request.getParameter("pregunta"));
+                preg.setPregunta(request.getParameter("pregunta").trim());
                 preg.setRespuestaCorrecta(request.getParameter("correcta"));
                 preg.setAlternativa1(request.getParameter("alt1"));
                 preg.setAlternativa2(request.getParameter("alt2"));

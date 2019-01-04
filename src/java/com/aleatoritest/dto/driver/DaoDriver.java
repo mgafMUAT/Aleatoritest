@@ -136,9 +136,11 @@ public abstract class DaoDriver<T> {
             PreparedStatement pstm = conn.prepareStatement(insertSQL());
             pstm = unMap(pstm, nuevo, false);
             System.out.println(pstm);
+            pstm.executeUpdate();
             String sql = listId() + " where " + SQLfields(true);
             pstm = conn.prepareStatement(sql);
             pstm = unMap(pstm, nuevo, false);
+            System.out.println(pstm);
             ResultSet idrs = pstm.executeQuery();
             if (!idrs.next()) {
                 return -1;
@@ -167,6 +169,7 @@ public abstract class DaoDriver<T> {
         try {
             PreparedStatement pstm = conn.prepareStatement(deleteSQL());
             pstm.setInt(1, id);
+            System.out.println(pstm);
             int update = pstm.executeUpdate();
             return update != 0;
 

@@ -36,7 +36,12 @@ public class Borrar extends HttpServlet {
         boolean preg = request.getParameter("pregoprueba").equals("1");
         DaoDriver pd = preg ? new PreguntaDriver() : new PruebaDriver();
         int prId = Integer.parseInt(request.getParameter("prId"));
-        JoinTableDriver jtd = new JoinTableDriver(JoinTable.PRUEBAHASPREGUNTA);
+        JoinTableDriver jtd;
+        if (preg) {
+            jtd = new JoinTableDriver(JoinTable.PREGUNTAHASMATERIA);
+            jtd.borrar(true, prId);
+        }
+        jtd = new JoinTableDriver(JoinTable.PRUEBAHASPREGUNTA);
         jtd.borrar(!preg, prId);
         pd.borrar(prId);
         response.sendRedirect("home");
